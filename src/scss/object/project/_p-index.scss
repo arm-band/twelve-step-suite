@@ -1,0 +1,43 @@
+@charset "utf-8";
+
+.c-breadcrumb {
+    &Wrapper {
+        counter-reset: number; /* カウンタを`c-breadcrumb`ごとにリセット */
+    }
+    &_item {
+        counter-increment: number; /* 採番のインクリメント */
+        .c-breadcrumb_count {
+            text-transform: uppercase;
+            &::after {
+                content: counter(number); /* brefore疑似要素に番号を自動採番で挿入 */
+                margin-right: 0.4rem;
+            }
+        }
+    }
+    &:first-of-type {
+        padding-right: 2rem;
+        .c-breadcrumb {
+            &_text {
+                &::before,
+                &::after {
+                    border: {
+                        top: 1.5rem solid transparent;
+                        bottom: 1.5rem solid transparent;
+                    }
+                }
+            }
+            &_item {
+                &:not(.active):last-of-type {
+                    .c-breadcrumb_text {
+                        &::before {
+                            border-left: 1rem solid $bg-color;
+                        }
+                        &::after {
+                            border-left: 1rem solid $main-color_l;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

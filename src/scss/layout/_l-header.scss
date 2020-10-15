@@ -1,0 +1,16 @@
+@charset "utf-8";
+
+.l-header {
+    .navbar-brand {
+        &,
+        &:link,
+        &:visited {
+            color: $main-color;
+        }
+        &:hover,
+        &:active,
+        &:focus {
+            color: $main-color_l;
+        }
+    }
+}

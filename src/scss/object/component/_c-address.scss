@@ -1,0 +1,15 @@
+@charset "utf-8";
+
+.c-address {
+    &_tel {
+        &::before {
+            @include pseudoColon("tel");
+            text-transform: uppercase;
+        }
+    }
+    &_postalcode {
+        &::before {
+            content: "〒";
+        }
+    }
+}

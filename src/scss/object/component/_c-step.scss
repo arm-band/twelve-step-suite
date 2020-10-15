@@ -1,0 +1,115 @@
+@charset "utf-8";
+
+$radius: 40px;
+$step-count: 12;
+$triangle-width: 20px;
+
+.c-step {
+    counter-reset: number; /* カウンタを`c-step`ごとにリセット */
+    /* one baloon */
+    &Container {
+        counter-increment: number; /* 採番のインクリメント */
+        position: relative;
+        &:first-of-type {
+            .c-stepBox {
+                padding: {
+                    top: 0.5rem;
+                    bottom: 1rem;
+                }
+            }
+        }
+        &:not(:first-of-type) {
+            margin-top: -0.8rem;
+            .c-stepBox {
+                padding: {
+                    top: 1rem;
+                    bottom: 1rem;
+                }
+            }
+        }
+        @for $i from 0 to $step-count {
+            &:nth-of-type(#{$i}) {
+                z-index: $step-count - $i;
+            }
+        }
+        &:nth-of-type(odd) {
+            .c-step{
+                &Carton::before {
+                    border-color: $main-color transparent transparent transparent;
+                }
+                &Box {
+                    background-color: $main-color;
+                }
+            }
+        }
+        &:nth-of-type(even) {
+            .c-step {
+                &Carton::before {
+                    border-color: $main-color_d transparent transparent transparent;
+                }
+                &Box {
+                    background-color: $main-color_d;
+                }
+            }
+        }
+        &:not(:last-of-type) {
+            /* baloon triangle */
+            .c-stepCarton {
+                &::before,
+                &::after {
+                    content: "";
+                    position: absolute;
+                    left: $radius * 2;
+                    width: 0;
+                    height: 0;
+                    border: {
+                        style: solid;
+                        width: $triangle-width $triangle-width 0 $triangle-width;
+                    }
+                }
+                &::before {
+                    z-index: 2;
+                    bottom: -1 * $triangle-width;
+                }
+                &::after {
+                    z-index: 1;
+                    border-color: $bg-color transparent transparent transparent;
+                    bottom: #{-1 * $triangle-width - 3px};
+                }
+            }
+        }
+    }
+    /* baloon */
+    &Carton {
+        position: relative;
+    }
+    /* text area */
+    &Box {
+        min-height: $radius * 2.5;
+        color: $bg-color;
+        padding-left: $radius * 2;
+        border-radius: $radius / 2;
+    }
+    /* step x */
+    &Counter {
+        position: absolute;
+        text-align: center;
+        top: 25%;
+        left: -1 * $radius / 2;
+        transform: translateY(-50%);
+        width: $radius * 2;
+        height: $radius * 2;
+        background-color: $accent-color;
+        border: 3px solid $bg-color;
+        border-radius: $radius / 2;
+        color: $bg-color;
+        line-height: 1.1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-transform: uppercase;
+        &::after {
+            content: counter(number); /* brefore疑似要素に番号を自動採番で挿入 */
+        }
+    }
+}
